@@ -10,20 +10,22 @@ Return the result table ordered by travelled_distance in descending order, if tw
 
 The result format is in the following example.
 -------------------------------------------------------
+SELECT u.name, SUM(COALESCE(r.distance,0)) total_distance
+FROM Users u LEFT JOIN Rides r ON u.id = r.user_id
+GROUP BY u.id
+ORDER BY total_distance DESC, u.name;
 
- 
 
-Example 1:
 
- 
-SELECT 
-    u.name AS name,
-    COALESCE(SUM(r.distance), 0) AS travelled_distance
-FROM 
-    Users u
-LEFT JOIN 
-    Rides r ON u.id = r.user_id
-GROUP BY 
-    u.id, u.name
-ORDER BY 
-    travelled_distance DESC, u.name;
+
+---------------------------------------------------------------------------------------------
+Write a solution to report the difference between the number of apples and oranges sold each day.
+
+Return the result table ordered by sale_date.
+---------------------------------------------------------------------------------------------
+
+
+SELECT 'apple' AS fruit, COUNT(*) AS amount FROM Fruits WHERE fruit = 'apple'
+UNION ALL
+SELECT 'orange', COUNT(*) FROM Fruits WHERE fruit = 'orange';
+
